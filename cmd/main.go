@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"bytes"
+	"flag"
 	"fmt"
 	"io"
 	"log"
@@ -13,7 +14,15 @@ import (
 
 func main() {
 
-	dr, err := datareader.NewMMapReader("../data/input/input.txt")
+	// takes an argument and provides default value
+	input := flag.String("input", "../data/input/input.txt", "input file")
+	output := flag.String("output", "../data/output/result.csv", "output file")
+	errorLog := flag.String("errorlog", "../data/output/error.txt", "error log")
+	chunkSize := flag.Int("chunksize", 4096, "chunk size for data reader")
+
+	flag.Parse()
+
+	dr, err := datareader.NewMMapReader(*input, *chunkSize)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -21,12 +30,12 @@ func main() {
 
 	ip := imageprocessor.NewImageProcessor()
 
-	dw, err := datawriter.NewFileWriter("../data/output/result.csv")
+	dw, err := datawriter.NewFileWriter(*output)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	de, err := datawriter.NewFileWriter("../data/output/error.txt")
+	de, err := datawriter.NewFileWriter(*errorLog)
 	if err != nil {
 		log.Fatal(err)
 	}

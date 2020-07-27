@@ -91,22 +91,19 @@ func (mr *MMapReader) Read() bool {
 	if mr.offset >= mr.fileSize {
 		// the last chunk
 		mr.data = data
-		// ioutil.WriteFile(fmt.Sprintf("%d%s", mr.index+1, ".txt"), data, 0644)
 
 		return true
 	}
 
 	// backCounter to make sure data ends with line feed
 	backCounter := mr.countBackBuffer(data)
-	// ioutil.WriteFile(fmt.Sprintf("%d%s", mr.index+1, "a.txt"), data, 0644)
+
 	// put into backBuffer for next read
 	mr.backBuffer = data[len(data)-backCounter:]
 
 	// truncate data to make sure data ends with line feed
 	data = data[:len(data)-backCounter]
 	mr.data = data
-
-	// ioutil.WriteFile(fmt.Sprintf("%d%s", mr.index+1, "b.txt"), data, 0644)
 
 	mr.index++
 	return true
