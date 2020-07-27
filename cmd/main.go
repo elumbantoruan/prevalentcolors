@@ -36,8 +36,6 @@ func main() {
 
 		scanner := bufio.NewScanner(bytes.NewReader(data))
 
-		// var wg sync.WaitGroup
-
 		var urls []string
 		for scanner.Scan() {
 			urls = append(urls, scanner.Text())
