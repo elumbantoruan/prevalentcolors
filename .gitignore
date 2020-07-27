@@ -1,0 +1,13 @@
+.DS_Store
+debug
+debug.test
+
+
+*.out
+*.test
+*.bin
+
+debug.test
+
+.vscode/
+settings.json
