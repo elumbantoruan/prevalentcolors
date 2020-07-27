@@ -6,6 +6,8 @@ debug.test
 *.out
 *.test
 *.bin
+*.exe
+cmd
 
 debug.test
 
