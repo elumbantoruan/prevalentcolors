@@ -1,7 +1,6 @@
 # prevalent colors
 
-The system calculates 3 most prevalent colors in the RGB scheme in hexadecimal format and write the result into a CSV file  and  
-must be able to scale with limited resources given of an input file.
+The system calculates 3 most prevalent colors in the RGB scheme in hexadecimal format and write the result into a CSV file and must be able to scale with limited resources given of an input file.
 
 ## Prevalent colors computation
 
@@ -66,15 +65,15 @@ If chunkSize is not being provided, then it take a default pagesize
 func Mmap(fd int, offset int64, length int, prot int, flags int) (data []byte, err error)
 ```
 
-The `offset` will start from zero and it will be incremented each time the `Read` function is called, while the `size` will be constant until the very end.  
+The `offset` (or starting point) will start from zero and it will be incremented each time the `Read` function is called, while the `size` (or the length) will be constant but at end it may not recalculated so it just return the remainder of data.  
 The `chunkSize` has to be the multiple of the page size.  In most system, the page size will be 4KB.  
 During the chunk process, the number of bytes that are returned may not have a fully portion of segment of data.  Since each line represents a URL follow by the line feed, it's possible that the whole URL is not completed.  To verify whether the line is complete, it will check if it contains the linefeed `(\n)`
 So, the `backBuffer` is used to capture the incomplete URL, and the data that will be returned will be truncated at the end.  The `backBuffer` will be prepended at the next `Read` operation
 
 ### pkg/datawriter
 
-pkg/datawriter appends bytes for a given output file.  
+pkg/datawriter appends bytes for a given output file.  It is used to write the result and error log.
 
 ### pkg/imageprocessor
 
-pkg/imageprocessor utilizes open source library from [EdlinOrg/prominentcolor](https://github.com/EdlinOrg/prominentcolor) to find the K most dominant colors in an image
+pkg/imageprocessor utilizes open source library from [EdlinOrg/prominentcolor](https://github.com/EdlinOrg/prominentcolor) to find the K most dominant colors in an image.
